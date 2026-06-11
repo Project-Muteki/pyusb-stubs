@@ -182,14 +182,14 @@ class Device(_objfinalizer.AutoFinalizedObject, Generic[T_DEV, T_DEVH]):
 
 @overload
 def find(
-    find_all: Literal[False],
+    find_all: Literal[False] = ...,
     backend: BackendProtocol[T_DEV, T_DEVH] | None = None,
     custom_match: Callable[[Device[T_DEV, T_DEVH]], bool]| None = None,
     **args: object,
 ) -> Device[T_DEV, T_DEVH] | None: ...
 @overload
 def find(
-    find_all: Literal[True],
+    find_all: Literal[True] = ...,
     backend: BackendProtocol[T_DEV, T_DEVH] | None = None,
     custom_match: Callable[[Device[T_DEV, T_DEVH]], bool]| None = None,
     **args: object,
