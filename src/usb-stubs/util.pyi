@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from array import array
 from typing import Any, Callable, Iterable, Literal, TypeVar, overload
-
+from typing_extensions import Never
 from .core import Device, Interface
 
 
@@ -46,7 +46,7 @@ def find_descriptor(desc: Iterable[T], find_all: Literal[True], custom_match: Ca
 @overload
 def find_descriptor(desc: Iterable[T], find_all: Literal[False], custom_match: Callable[[T], bool] | None = None, **args: object) -> T | None: ...
 @overload
-def find_descriptor(desc: Iterable[T], custom_match: Callable[[T], bool] | None = None, **args: object) -> T | None: ...
+def find_descriptor(desc: Iterable[T], find_all: Never = ..., custom_match: Callable[[T], bool] | None = None, **args: object) -> T | None: ...
 
 def claim_interface(device, interface: Interface) -> None: ...
 def release_interface(device, interface: Interface) -> None: ...

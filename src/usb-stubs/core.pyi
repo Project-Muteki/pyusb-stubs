@@ -1,5 +1,6 @@
 from array import array
 from typing import Any, Callable, Generic, Literal, TypeVar, overload
+from typing_extensions import Never
 from collections.abc import Iterator, Sequence
 from ._typing import DataOrLength
 from .backend import BackendProtocol
@@ -197,6 +198,7 @@ def find(
 # been exhausted by the above overloads.
 @overload
 def find(
+    find_all: Never = ...,
     backend: BackendProtocol[T_DEV, T_DEVH] | None = None,
     custom_match: Callable[[Device[T_DEV, T_DEVH]], bool]| None = None,
     **args: object,
