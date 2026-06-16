@@ -12,8 +12,8 @@ from . import libusb0, libusb1, openusb
 
 __all__ = ["IBackend", "libusb0", "libusb1", "openusb"]
 
-T_DEV = TypeVar("T_DEV")
-T_DEVH = TypeVar("T_DEVH")
+T_DEV = TypeVar("T_DEV", default=Any)
+T_DEVH = TypeVar("T_DEVH", default=Any)
 
 class BackendProtocol(Protocol[T_DEV, T_DEVH]):
     def enumerate_devices(self) -> Iterable[T_DEV]: ...

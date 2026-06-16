@@ -1,5 +1,7 @@
 from array import array
 from ctypes import *
+
+from typing_extensions import override
 import usb.backend
 from collections.abc import Iterable, Sequence
 
@@ -70,28 +72,41 @@ class _DeviceDescriptor:
     def __init__(self, dev: _usb_device) -> None: ...
 
 class _LibUSB(usb.backend.IBackend):
+    @override
     def enumerate_devices(self) -> Iterable[_usb_device]: ...
+    @override
     def get_device_descriptor(self, dev: _usb_device) -> _DeviceDescriptor: ...
+    @override
     def get_configuration_descriptor(
         self, dev: _usb_device, config: int
     ) -> _usb_config_descriptor: ...
+    @override
     def get_interface_descriptor(
         self, dev: _usb_device, intf: int, alt: int, config: int
     ) -> _usb_interface_descriptor: ...
+    @override
     def get_endpoint_descriptor(
         self, dev: _usb_device, ep: int, intf: int, alt: int, config: int
     ) -> _usb_endpoint_descriptor: ...
+    @override
     def open_device(self, dev: _usb_device) -> _usb_dev_handle: ...
+    @override
     def close_device(self, dev_handle: _usb_dev_handle) -> None: ...
+    @override
     def set_configuration(
         self, dev_handle: _usb_dev_handle, config_value: int
     ) -> None: ...
+    @override
     def get_configuration(self, dev_handle: _usb_dev_handle) -> int: ...
+    @override
     def set_interface_altsetting(
         self, dev_handle: _usb_dev_handle, intf: int, altsetting: int
     ) -> None: ...
+    @override
     def claim_interface(self, dev_handle: _usb_dev_handle, intf: int) -> None: ...
+    @override
     def release_interface(self, dev_handle: _usb_dev_handle, intf: int) -> None: ...
+    @override
     def bulk_write(
         self,
         dev_handle: _usb_dev_handle,
@@ -100,6 +115,7 @@ class _LibUSB(usb.backend.IBackend):
         data: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def bulk_read(
         self,
         dev_handle: _usb_dev_handle,
@@ -108,6 +124,7 @@ class _LibUSB(usb.backend.IBackend):
         buff: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def intr_write(
         self,
         dev_handle: _usb_dev_handle,
@@ -116,6 +133,7 @@ class _LibUSB(usb.backend.IBackend):
         data: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def intr_read(
         self,
         dev_handle: _usb_dev_handle,
@@ -124,6 +142,7 @@ class _LibUSB(usb.backend.IBackend):
         buff: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def iso_write(
         self,
         dev_handle: _usb_dev_handle,
@@ -132,6 +151,7 @@ class _LibUSB(usb.backend.IBackend):
         data: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def iso_read(
         self,
         dev_handle: _usb_dev_handle,
@@ -140,6 +160,7 @@ class _LibUSB(usb.backend.IBackend):
         buff: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def ctrl_transfer(
         self,
         dev_handle: _usb_dev_handle,
@@ -150,11 +171,15 @@ class _LibUSB(usb.backend.IBackend):
         data: array[int],
         timeout: int,
     ) -> int: ...
+    @override
     def clear_halt(self, dev_handle: _usb_dev_handle, ep: int) -> None: ...
+    @override
     def reset_device(self, dev_handle: _usb_dev_handle) -> None: ...
+    @override
     def is_kernel_driver_active(
         self, dev_handle: _usb_dev_handle, intf: int
     ) -> bool: ...
+    @override
     def detach_kernel_driver(self, dev_handle: _usb_dev_handle, intf: int) -> None: ...
 
 def get_backend(find_library=None) -> _LibUSB | None: ...

@@ -1,6 +1,6 @@
 from array import array
 from typing import Any, Callable, Generic, Literal, TypeVar, overload
-from typing_extensions import Never
+from typing_extensions import Never, override
 from collections.abc import Iterator, Sequence
 from ._typing import DataOrLength
 from .backend import BackendProtocol
@@ -20,6 +20,7 @@ __all__ = [
 ]
 
 class _DescriptorInfo(str):
+    @override
     def __repr__(self) -> str: ...
 
 class USBError(IOError):
@@ -31,8 +32,8 @@ class USBError(IOError):
 class USBTimeoutError(USBError): ...
 class NoBackendError(ValueError): ...
 
-T_DEV = TypeVar("T_DEV")
-T_DEVH = TypeVar("T_DEVH")
+T_DEV = TypeVar("T_DEV", default=Any)
+T_DEVH = TypeVar("T_DEVH", default=Any)
 
 class Endpoint(Generic[T_DEV, T_DEVH]):
     device: Device[T_DEV, T_DEVH]
@@ -133,7 +134,9 @@ class Device(_objfinalizer.AutoFinalizedObject, Generic[T_DEV, T_DEVH]):
     port_numbers: Sequence[int] | None
     speed: int | None
 
+    @override
     def __eq__(self, other: object, /) -> bool: ...
+    @override
     def __hash__(self) -> int: ...
     def configurations(self) -> tuple[Configuration[T_DEV, T_DEVH], ...]: ...
     def __init__(self, dev: T_DEV, backend: BackendProtocol[T_DEV, T_DEVH]) -> None: ...
@@ -206,6 +209,6 @@ def find(
 def show_devices(
     verbose: bool = False,
     /,
-    backend: BackendProtocol[Any, Any] | None = None,
+    backend: BackendProtocol | None = None,
     **kwargs: object,
 ) -> _DescriptorInfo: ...
